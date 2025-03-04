@@ -246,6 +246,7 @@ MonoBehaviour:
   gridLevel: 1
   numRows: 5
   numCols: 6
+  holderPrefab: {fileID: 2660963504972313302, guid: 1b8ccc5cc2d482e4796ce8629143148e, type: 3}
   tilePrefab: {fileID: 6914377085120548445, guid: e3c7c0a7a02593749b3b18260e354eb3, type: 3}
   playerPrefab: {fileID: 4153539925602362836, guid: 2aacd56d34bd67842a5e0cf9a17357dd, type: 3}
 --- !u!4 &1662928522

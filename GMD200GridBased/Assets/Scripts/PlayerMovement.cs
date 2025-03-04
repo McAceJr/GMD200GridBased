@@ -11,14 +11,21 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector2Int gridPos = Vector2Int.zero;
 
+    static int MAX = 4;
     public float coolTime;
-    private float downTime = 0;
-    [SerializeField] private bool cooldown = false;
+    private float[] downTime = new float[MAX];
+    [SerializeField] private bool[] cooldown = new bool[MAX]; // bools for the 4 directions of movement
 
     [SerializeField] private GridManager gM;
 
     private void Awake()
     {
+
+        for (int i = 0; i < MAX; i++)
+            cooldown[i] = true;
+
+        for (int i = 0; i < MAX; i++)
+            downTime[i] = 0;
 
     }
 
@@ -27,40 +34,45 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 targetpos = gM.GetTile(gridPos.x, gridPos.y).transform.position;
 
+        gM.GetTile(gridPos.x, gridPos.y).player = true;
+
         transform.position = Vector3.MoveTowards(transform.position, targetpos, transitionSpeed * Time.deltaTime);
 
-        if (!cooldown)
-            downTime++;
-
-        if (downTime >= coolTime)
+        for (int i = 0; i < MAX; i++)
         {
-            downTime = 0;
-            cooldown = true;
+            if (!cooldown[i])
+                downTime[i]++;
+
+            if (downTime[i] >= coolTime && !cooldown[i])
+            {
+                downTime[i] = 0;
+                cooldown[i] = true;
+            }
         }
 
         Debug.Log(downTime);
 
         if (Vector3.Distance(transform.position, targetpos) < 0.001f)
         {
-            if (Input.GetKey(KeyCode.RightArrow) && gridPos.x < gM.numRows && cooldown)
+            if (Input.GetKey(KeyCode.RightArrow) && gridPos.x < gM.numRows && cooldown[0])
             {
                 gridPos.x++;
-                cooldown = false;
+                cooldown[0] = false;
             }
-            if (Input.GetKey(KeyCode.LeftArrow) && gridPos.x > 0 && cooldown)
+            if (Input.GetKey(KeyCode.LeftArrow) && gridPos.x > 0 && cooldown[1])
             {
                 gridPos.x--;
-                cooldown = false;
+                cooldown[1] = false;
             }
-            if (Input.GetKey(KeyCode.DownArrow) && gridPos.y > 0 && cooldown)
+            if (Input.GetKey(KeyCode.DownArrow) && gridPos.y > 0 && cooldown[2])
             {
                 gridPos.y--;
-                cooldown = false;
+                cooldown[2] = false;
             }
-            if (Input.GetKey(KeyCode.UpArrow) && gridPos.y < gM.numCols - 2 && cooldown)
+            if (Input.GetKey(KeyCode.UpArrow) && gridPos.y < gM.numCols - 2 && cooldown[3])
             {
                 gridPos.y++;
-                cooldown = false;
+                cooldown[3] = false;
             }
         }
 

@@ -45,8 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae4bbdf3a5a5794789a14945372f779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionSpeed: 5
+  transitionSpeed: 10
   gridPos: {x: 0, y: 0}
+  coolTime: 25
+  cooldown: 00000000
   gM: {fileID: 0}
 --- !u!1 &7532060646961105818
 GameObject:
