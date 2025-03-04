@@ -21,11 +21,11 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
 
-        for (int i = 0; i < MAX; i++)
+        /*for (int i = 0; i < MAX; i++)
             cooldown[i] = true;
 
         for (int i = 0; i < MAX; i++)
-            downTime[i] = 0;
+            downTime[i] = 0;*/
 
     }
 
@@ -34,11 +34,11 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 targetpos = gM.GetTile(gridPos.x, gridPos.y).transform.position;
 
-        gM.GetTile(gridPos.x, gridPos.y).player = true;
+        gM.GetTile(gridPos.x, gridPos.y).data[0].isType = true;
 
         transform.position = Vector3.MoveTowards(transform.position, targetpos, transitionSpeed * Time.deltaTime);
 
-        for (int i = 0; i < MAX; i++)
+        /*for (int i = 0; i < MAX; i++)
         {
             if (!cooldown[i])
                 downTime[i]++;
@@ -48,31 +48,61 @@ public class PlayerMovement : MonoBehaviour
                 downTime[i] = 0;
                 cooldown[i] = true;
             }
-        }
-
-        Debug.Log(downTime);
+        }*/
 
         if (Vector3.Distance(transform.position, targetpos) < 0.001f)
         {
-            if (Input.GetKey(KeyCode.RightArrow) && gridPos.x < gM.numRows && cooldown[0])
+            if (Input.GetKey(KeyCode.RightArrow) && gridPos.x < gM.numCols - 1)
             {
-                gridPos.x++;
-                cooldown[0] = false;
+
+                if (gM.GetTile(gridPos.x + 1, gridPos.y).data[1].isType != true)
+                {
+
+                    gM.GetTile(gridPos.x, gridPos.y).data[0].isType = false;
+
+                    gridPos.x++;
+
+                }
+
             }
-            if (Input.GetKey(KeyCode.LeftArrow) && gridPos.x > 0 && cooldown[1])
+            if (Input.GetKey(KeyCode.LeftArrow) && gridPos.x > 0)
             {
-                gridPos.x--;
-                cooldown[1] = false;
+
+                if (gM.GetTile(gridPos.x - 1, gridPos.y).data[1].isType != true)
+                {
+
+                    gM.GetTile(gridPos.x, gridPos.y).data[0].isType = false;
+
+                    gridPos.x--;
+
+                }
+
             }
-            if (Input.GetKey(KeyCode.DownArrow) && gridPos.y > 0 && cooldown[2])
+            if (Input.GetKey(KeyCode.DownArrow) && gridPos.y > 0)
             {
-                gridPos.y--;
-                cooldown[2] = false;
+
+                if (gM.GetTile(gridPos.x, gridPos.y - 1).data[1].isType != true)
+                {
+
+                    gM.GetTile(gridPos.x, gridPos.y).data[0].isType = false;
+
+                    gridPos.y--;
+
+                }
+
             }
-            if (Input.GetKey(KeyCode.UpArrow) && gridPos.y < gM.numCols - 2 && cooldown[3])
+            if (Input.GetKey(KeyCode.UpArrow) && gridPos.y < gM.numRows - 1)
             {
-                gridPos.y++;
-                cooldown[3] = false;
+
+                if (gM.GetTile(gridPos.x, gridPos.y + 1).data[1].isType != true)
+                {
+
+                    gM.GetTile(gridPos.x, gridPos.y).data[0].isType = false;
+
+                    gridPos.y++;
+
+                }
+
             }
         }
 

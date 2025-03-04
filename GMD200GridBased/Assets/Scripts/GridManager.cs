@@ -20,7 +20,14 @@ public class GridManager : MonoBehaviour
     private void Awake()
     {
 
+        ClearGrid();
+
         _tiles.Capacity = numRows * numCols;
+
+    }
+
+    private void Start()
+    {
 
         InitGrid();
 
@@ -86,8 +93,6 @@ public class GridManager : MonoBehaviour
         return _tiles[index];
 
     }
-
-    
 
 
 }

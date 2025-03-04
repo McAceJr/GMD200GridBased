@@ -244,8 +244,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridLevel: 1
-  numRows: 5
-  numCols: 6
+  numRows: 8
+  numCols: 14
+  holderPrefab: {fileID: 2660963504972313302, guid: 1b8ccc5cc2d482e4796ce8629143148e, type: 3}
   tilePrefab: {fileID: 6914377085120548445, guid: e3c7c0a7a02593749b3b18260e354eb3, type: 3}
   playerPrefab: {fileID: 4153539925602362836, guid: 2aacd56d34bd67842a5e0cf9a17357dd, type: 3}
 --- !u!4 &1662928522
@@ -257,7 +258,7 @@ Transform:
   m_GameObject: {fileID: 1662928520}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -22, y: -16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
