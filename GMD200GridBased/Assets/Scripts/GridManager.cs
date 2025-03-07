@@ -11,9 +11,11 @@ public class GridManager : MonoBehaviour
     public int numRows = 5;
     public int numCols = 6;
 
+    public Texture2D level;
+
     public GameObject holderPrefab;
     [SerializeField] private GridTile tilePrefab;
-    [SerializeField] private PlayerMovement playerPrefab;
+    public PlayerMovement playerPrefab;
 
     private List<GridTile> _tiles = new List<GridTile>();
 
@@ -37,6 +39,11 @@ public class GridManager : MonoBehaviour
 
     public void InitGrid()
     {
+        Color[] colorData = level.GetPixels();
+
+        numCols = level.width;
+        numRows = level.height;
+
 
         for (int y = 0; y < numRows; y++)
         {
@@ -44,9 +51,17 @@ public class GridManager : MonoBehaviour
             {
                 GridTile tile = Instantiate(tilePrefab, transform); // creates the grid
                 Vector2 tilePos = new Vector2(x, y);
+                
                 tile.transform.position = tilePos;
                 tile.name = $"{gridLevel}Tile_{x}_{y}";
                 _tiles.Add(tile);
+
+                int index = y * numCols + x;
+                tile.spr.color = colorData[index];
+                tile.AssignType();
+                if (tile.data[2].isType)
+                    Instantiate(playerPrefab, tile.transform.position, tile.transform.rotation);
+
             }
         }
 

@@ -50,6 +50,8 @@ MonoBehaviour:
   coolTime: 25
   cooldown: 00000000
   gM: {fileID: 0}
+  ease: 1
+  moveDuration: 0.2
 --- !u!1 &7532060646961105818
 GameObject:
   m_ObjectHideFlags: 0

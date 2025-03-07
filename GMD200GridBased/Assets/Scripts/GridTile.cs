@@ -14,14 +14,44 @@ public class GridTile : MonoBehaviour
 
     };
 
+    public GridManager gM;
+
     public SpriteRenderer spr;
 
     public tileType[] data;
 
+    public void AssignType()
+    {
+
+        bool found = false;
+
+        for (int i =0; i < data.Length; i++)
+        {
+
+            if (spr.color == data[i].typeColor)
+            {
+
+                data[i].isType = true;
+
+                found = true;
+
+            }
+
+        }
+
+        if (!found)
+        {
+
+            data[0].isType = true; // the index of 1 for data is the defualt / empty square so if the color isnt found then make the square empty
+
+        }
+
+    }
+
     private void Update()
     {
 
-        bool assigned = false;
+        /*bool assigned = false;
 
         for (int i = 0; i < data.Length; i++)
         {
@@ -42,7 +72,7 @@ public class GridTile : MonoBehaviour
 
             spr.color = Color.white;
 
-        }
+        }*/
 
     }
 

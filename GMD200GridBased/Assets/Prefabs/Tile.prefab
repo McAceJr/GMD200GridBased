@@ -99,11 +99,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spr: {fileID: 8791019846449144982}
   data:
-  - name: Player
-    typeColor: {r: 0, g: 0, b: 1, a: 1}
+  - name: Empty
+    typeColor: {r: 1, g: 1, b: 1, a: 1}
     isType: 0
   - name: Wall
     typeColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+    isType: 0
+  - name: Player
+    typeColor: {r: 0, g: 0, b: 1, a: 1}
     isType: 0
   - name: Box
     typeColor: {r: 1, g: 0.6, b: 0, a: 1}
