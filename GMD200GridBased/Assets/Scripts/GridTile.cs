@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,19 @@ public class GridTile : MonoBehaviour
 
     };
 
-    public GridManager gM;
-
     public SpriteRenderer spr;
 
     public tileType[] data;
+    /*
+    0 Empty Tile
+    1 Wall Tile
+    2 Player Tile
+    3 Box Tile
+    4 Box Goal Tile
+    5 Player Goal Tile
+    6 Door Tile
+    7 Door Switch Tile
+    */
 
     public void AssignType()
     {
@@ -42,7 +51,7 @@ public class GridTile : MonoBehaviour
         if (!found)
         {
 
-            data[0].isType = true; // the index of 1 for data is the defualt / empty square so if the color isnt found then make the square empty
+            data[0].isType = true; // the index of 0 for data is the defualt / empty square so if the color isnt found then make the square empty
 
         }
 
