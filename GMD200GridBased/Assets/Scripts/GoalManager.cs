@@ -20,7 +20,7 @@ public class GoalManager : MonoBehaviour
 
     public List<bool> _states = new List<bool>();
 
-    private void Awake()
+    private void Awake() // resets the states to 1 and adds a false state signaling the starting state
     {
         
         _states.Capacity = 1;
@@ -29,7 +29,7 @@ public class GoalManager : MonoBehaviour
 
     }
 
-    private void Update()
+    private void Update() // checks if the bool has been triggered and if it has thenn it should be on otherwise off
     {
         
         undos = _states.Capacity;
@@ -54,14 +54,14 @@ public class GoalManager : MonoBehaviour
 
     }
 
-    public void Activate()
+    public void Activate() //called by other functions to active goal
     {
 
         Active = true;
 
     }
 
-    public void Deactivate() 
+    public void Deactivate() //called by other functions to deactivate goal
     {
 
         Active = false;

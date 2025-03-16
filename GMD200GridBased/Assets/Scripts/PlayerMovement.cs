@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     public List<Vector2Int> _playerPositions = new List<Vector2Int>();
 
-    private void Awake()
+    private void Awake() // sets player positiosn capacity to 1 for starter position and adds its current for the pos
     {
 
         gM = FindObjectOfType<GridManager>();
@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    public void MoveTo(Vector2Int newpos, Vector2Int dir, int movemult, bool undoing)
+    public void MoveTo(Vector2Int newpos, Vector2Int dir, int movemult, bool undoing) // this function takes care of the majority of the tweening and moving going on in the character also the detection of walls and boxes
     {
 
         bool moved = false;
@@ -164,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Update() // checks for inputs via arrow keys and sends a vector2int to the moveto function
     {
 
         undos = _playerPositions.Capacity;
@@ -173,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
 
         //gM.GetTile(gridPos.x, gridPos.y).data[0].isType = true;
 
-        //transform.position = Vector3.MoveTowards(transform.position, targetpos, transitionSpeed * Time.deltaTime);
+        //transform.position = Vector3.MoveTowards(transform.position, targetpos, transitionSpeed * Time.deltaTime); // going to remove this big chunk later
 
         /*for (int i = 0; i < MAX; i++)
         {

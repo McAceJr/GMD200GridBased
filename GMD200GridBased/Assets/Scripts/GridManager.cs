@@ -1,6 +1,8 @@
+using Cinemachine;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEditor.Tilemaps;
 using UnityEngine;
@@ -15,8 +17,8 @@ public class GridManager : MonoBehaviour
 
     public int gridLevel;
 
-    public int numRows = 5;
-    public int numCols = 6;
+    public int numRows = 0;
+    public int numCols = 0;
 
     public Texture2D level;
 
@@ -27,10 +29,11 @@ public class GridManager : MonoBehaviour
     public GoalManager boxGoalPrefab;
     public GoalManager playerGoalPrefab;
 
+    public GameObject lowbound, highbound;
     public GameObject winUI;
 
     public PlayerMovement player;
-    private List<GridTile> _tiles = new List<GridTile>();
+    public List<GridTile> _tiles = new List<GridTile>();
     public List<BoxMovement> _boxes = new List<BoxMovement>();
     public List<GoalManager> _goals = new List<GoalManager>();
 
@@ -40,7 +43,7 @@ public class GridManager : MonoBehaviour
     public float scaleDuration;
     private Tween scaleTween;
 
-    private void Awake()
+    private void Awake() // double checks that the winui is off and sets capacities for the goals and boxes to 0 to be updated in the initialization
     {
 
         winUI.SetActive(false);
@@ -51,7 +54,7 @@ public class GridManager : MonoBehaviour
 
     }
 
-    private void Start()
+    private void Start() // initializes the grid and centers it at teh start
     {
 
         InitGrid();
@@ -60,13 +63,14 @@ public class GridManager : MonoBehaviour
 
     }
 
-    private void Update()
+    private void Update() // in update I check for if all the goals have been completed, and I check if the player wants to press R to restart or Z to Undo
     {
+
         bool complete = true;
-        
-        if (!uiActive)
+
+        if (!uiActive) // checks if the ui is already activated meaning its been completed
         {
-            for (int i = 0; i < _goals.Capacity; i++)
+            for (int i = 0; i < _goals.Capacity; i++) // checks all goals and if a single goal isnt active than complete becomes false
             {
 
                 if (!_goals[i].Active)
@@ -76,15 +80,23 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        if (complete)
+        if (complete) // if complete is never turned false that menas all the goals are on and you get to see the win screen and go back to the main menu
         {
+
 
             if (!uiActive)
             {
 
+                bool cleared = false;
+
                 player.moveTween.Kill();
 
-                ClearGrid();
+                while(!cleared)
+                {
+
+                    cleared = ClearGrid();
+
+                }
 
                 StartCoroutine(InputToLeave());
 
@@ -96,30 +108,30 @@ public class GridManager : MonoBehaviour
 
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && !complete) // restarts the scene
         {
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
         }
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z) && !complete) // everytime the player moves it records everything's position / states and then pressing Z goes backwards 1 in the list removing the positions/states they used to be at
         {
 
-            if (player._playerPositions.Capacity <= 1)
+            if (player._playerPositions.Capacity <= 1) // checks for the only player as long as there is more than 1 state in there meaning you aren't at the start
             {
 
                 return;
 
             }
 
-            player.MoveTo(player._playerPositions[player.undos - 2], new Vector2Int (0, 0), 0, true);
+            player.MoveTo(player._playerPositions[player.undos - 2], new Vector2Int(0, 0), 0, true);
 
             player._playerPositions.RemoveAt(player.undos - 1);
 
             player._playerPositions.Capacity--;
 
-            for (int i = 0; i < _boxes.Capacity; i++)
+            for (int i = 0; i < _boxes.Capacity; i++) // checks for multiple boxes
             {
 
                 _boxes[i].Move(_boxes[i]._boxPositions[_boxes[i].undos - 2], 0);
@@ -130,7 +142,7 @@ public class GridManager : MonoBehaviour
 
             }
 
-            for (int i = 0; i < _goals.Capacity; i++)
+            for (int i = 0; i < _goals.Capacity; i++) // checks for multiple goals 
             {
 
                 _goals[i].Active = _goals[i]._states[_goals[i].undos - 2];
@@ -144,7 +156,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public void InitGrid()
+    public void InitGrid() // creates the grid reading from an image file and taking the different colors to assign different tiles
     {
         Color[] colorData = level.GetPixels();
 
@@ -219,9 +231,13 @@ public class GridManager : MonoBehaviour
             }
         }
 
+        lowbound.transform.position = _tiles[0].transform.position;
+
+        highbound.transform.position = _tiles[_tiles.Capacity -1].transform.position;
+
     }
 
-    public void CenterGrid()
+    public void CenterGrid() // post initiation it centers the grid based on the dimensions
     {
 
         float totalX = 0;
@@ -245,18 +261,21 @@ public class GridManager : MonoBehaviour
 
     }
 
-    public void ClearGrid()
+    public bool ClearGrid() // removes all tiles from grid one by one
     {
 
-        for (int i = 0; i < _tiles.Capacity; i++)
+        for (int i = 0; i < _tiles.Capacity+3; i++) // Some error is forcing me to have this +3 inside the for loop otherwise it missess the last three tiles might fix later but not sure how this is happening as the tile.capcity never looses value and it can only gain value.
         {
 
             Destroy(this.transform.GetChild(i).gameObject);
 
         }
+
+        return true;
+
     }
 
-    public GridTile GetTile(int col, int row)
+    public GridTile GetTile(int col, int row) // finds a specific tile based on the col and row its in and returns the tile's script
     {
 
         int index = row * numCols + col;
@@ -264,7 +283,7 @@ public class GridManager : MonoBehaviour
 
     }
 
-    public BoxMovement GetBox(int x, int y)
+    public BoxMovement GetBox(int x, int y) // finds a specific box based on its grid pos and returns it's script
     {
 
         Vector2Int gridCheck = new Vector2Int(x, y);
@@ -285,7 +304,7 @@ public class GridManager : MonoBehaviour
 
     }
 
-    private IEnumerator InputToLeave()
+    private IEnumerator InputToLeave() // just delays the transition to main menu
     {
 
         yield return new WaitForSeconds(2.5f);

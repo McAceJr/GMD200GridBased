@@ -29,7 +29,7 @@ public class BoxMovement : MonoBehaviour
 
     public List<Vector2Int> _boxPositions = new List<Vector2Int>();
 
-    private void Awake()
+    private void Awake() // very similar to playermovement
     {
         
         gM = FindObjectOfType<GridManager>();
@@ -40,20 +40,57 @@ public class BoxMovement : MonoBehaviour
 
     }
 
-    private void Update()
+    private void Update() // the if statement makes sure that the tile the box is on is a box tile to signify the player that there is a box there, and there is no need to make it remove the is type because the player always double checks if there is actually a box there
     {
 
         undos = _boxPositions.Capacity;
 
+        if (!gM.GetTile(gridPos.x, gridPos.y).data[3].isType)
+        {
+
+            gM.GetTile(gridPos.x, gridPos.y).data[3].isType = true;
+
+        }
+
     }
 
-    public bool PushCheck(Vector2Int dir)
+    public bool PushCheck(Vector2Int dir) // this makes sure the box can be pushed which causes loops based on how many boxes are in a row that you are pushing and it will keep going ontill there are no more boxes and it runs into an empty tile (with or without a goal) or a wall returning a bool if the player can push them and move into their spot
     {
 
         Vector2Int nextpos = gridPos + dir;
 
         if (gM.GetTile(nextpos.x, nextpos.y).data[1].isType)
-            return false;   
+            return false;
+        else if (gM.GetTile(nextpos.x, nextpos.y).data[3].isType)
+        {
+            bool nextBoxCheck;
+
+            BoxMovement adjbox = gM.GetBox(nextpos.x, nextpos.y);
+
+            nextBoxCheck = adjbox.PushCheck(dir);
+
+            if (nextBoxCheck)
+            {
+
+                if (gM.GetTile(nextpos.x, nextpos.y).data[4].isType)
+                {
+
+                    boxGoal = gM.GetTile(nextpos.x, nextpos.y).GetComponentInChildren<GoalManager>();
+
+                    tMPro.color = sR.color;
+
+                    boxGoal.Activate();
+
+                }
+
+                Move(nextpos, 1);
+            }
+
+            return nextBoxCheck;
+
+            
+
+        }
         else
         {
             if (gM.GetTile(nextpos.x, nextpos.y).data[4].isType)
@@ -75,7 +112,7 @@ public class BoxMovement : MonoBehaviour
 
     }
 
-    public void Move(Vector2Int moveto, int movemult)
+    public void Move(Vector2Int moveto, int movemult) // actually handles the move and the move mult is just so that undooing can look different from moving
     {
 
         gM.GetTile(gridPos.x, gridPos.y).data[BoxData].isType = false;

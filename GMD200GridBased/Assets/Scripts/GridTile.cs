@@ -29,7 +29,7 @@ public class GridTile : MonoBehaviour
     7 Door Switch Tile
     */
 
-    public void AssignType()
+    public void AssignType() // is called when assigning the type which is color based but after it only keeps the necessary colors removing the player start pos and box start pos colored tiles making them white
     {
 
         bool found = false;
@@ -44,6 +44,11 @@ public class GridTile : MonoBehaviour
 
                 found = true;
 
+                if (data[i].typeColor == data[2].typeColor)
+                    spr.color = Color.white;
+                else if (data[i].typeColor == data[3].typeColor)
+                    spr.color = Color.white;
+
             }
 
         }
@@ -53,11 +58,13 @@ public class GridTile : MonoBehaviour
 
             data[0].isType = true; // the index of 0 for data is the defualt / empty square so if the color isnt found then make the square empty
 
+            spr.color = Color.white;
+
         }
 
     }
 
-    private void Update()
+    private void Update() // going to be remove later
     {
 
         /*bool assigned = false;
