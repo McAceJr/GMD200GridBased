@@ -1,5 +1,6 @@
 using Cinemachine;
 using DG.Tweening;
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -12,6 +13,10 @@ using UnityEngine.UIElements;
 
 public class GridManager : MonoBehaviour
 {
+
+    private int sceneIndex;
+    private int levelNumber = 1;
+    public string exitTo;
 
     public bool playerIsTweening;
 
@@ -28,6 +33,8 @@ public class GridManager : MonoBehaviour
     public BoxMovement boxPrefab;
     public GoalManager boxGoalPrefab;
     public GoalManager playerGoalPrefab;
+    public GoalManager levelGoalPrefab;
+    public LevelLoader levelLoaderPrefab;
 
     public GameObject lowbound, highbound;
     public GameObject winUI;
@@ -226,7 +233,32 @@ public class GridManager : MonoBehaviour
                     _goals.Add(playerGoal);
 
                 }
+                else if (tile.data[6].isType)
+                {
+
+                    GoalManager levelGoal = Instantiate(levelGoalPrefab, tile.transform);
+
+                    levelGoal.transform.position = tilePos;
+
+                    _goals.Capacity++;
+
+                    _goals.Add(levelGoal);
+
+                }
+                else if (tile.data[7].isType)
+                {
                     
+                    LevelLoader level = Instantiate(levelLoaderPrefab, tile.transform);
+
+                    level.transform.position = tilePos;
+
+                    level.levelPos = new Vector2Int(x, y);
+
+                    level.levelNumber = levelNumber;
+
+                    levelNumber++;
+                }
+
 
             }
         }
@@ -309,7 +341,7 @@ public class GridManager : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
 
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene(exitTo);
 
     }
 

@@ -25,8 +25,8 @@ public class GridTile : MonoBehaviour
     3 Box Tile
     4 Box Goal Tile
     5 Player Goal Tile
-    6 Door Tile
-    7 Door Switch Tile
+    6 Level Goal Tile
+    7 Level Button Tile
     */
 
     public void AssignType() // is called when assigning the type which is color based but after it only keeps the necessary colors removing the player start pos and box start pos colored tiles making them white
@@ -48,6 +48,9 @@ public class GridTile : MonoBehaviour
                     spr.color = Color.white;
                 else if (data[i].typeColor == data[3].typeColor)
                     spr.color = Color.white;
+                else if (data[i].typeColor == data[6].typeColor)
+                    data[1].isType = true;
+                
 
             }
 
@@ -58,7 +61,7 @@ public class GridTile : MonoBehaviour
 
             data[0].isType = true; // the index of 0 for data is the defualt / empty square so if the color isnt found then make the square empty
 
-            spr.color = Color.white;
+            spr.color = Color.black;
 
         }
 

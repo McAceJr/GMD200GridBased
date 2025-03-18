@@ -6,6 +6,8 @@ using UnityEngine;
 public class GoalManager : MonoBehaviour
 {
 
+    public static bool completed;
+
     public int undos;
 
     [SerializeField] private GridManager gM;
@@ -26,6 +28,13 @@ public class GoalManager : MonoBehaviour
         _states.Capacity = 1;
 
         _states.Add(false);
+
+        if (completed)
+        {
+
+            Activate();
+
+        }
 
     }
 
