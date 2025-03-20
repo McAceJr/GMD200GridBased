@@ -29,7 +29,11 @@ public class GridTile : MonoBehaviour
     7 Level Button Tile
     */
 
-    public void AssignType() // is called when assigning the type which is color based but after it only keeps the necessary colors removing the player start pos and box start pos colored tiles making them white
+    /*
+     is called when assigning the type which is color based but after it only keeps the necessary
+     colors removing the player start pos and box start pos colored tiles making them white.
+     */
+    public void AssignType()
     {
 
         bool found = false;
@@ -59,39 +63,16 @@ public class GridTile : MonoBehaviour
         if (!found)
         {
 
-            data[0].isType = true; // the index of 0 for data is the defualt / empty square so if the color isnt found then make the square empty
+            /*
+             the index of 0 for data is the defualt / empty square so if the color isnt found then make the square empty
+             if its not found it will also make the tile black to make invisible paths
+             */
+
+            data[0].isType = true;
 
             spr.color = Color.black;
 
         }
-
-    }
-
-    private void Update() // going to be remove later
-    {
-
-        /*bool assigned = false;
-
-        for (int i = 0; i < data.Length; i++)
-        {
-
-            if (data[i].isType)
-            {
-                
-                spr.color = data[i].typeColor;
-
-                assigned = true;
-
-            }
-
-        }
-
-        if (!assigned)
-        {
-
-            spr.color = Color.white;
-
-        }*/
 
     }
 

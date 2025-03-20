@@ -6,7 +6,9 @@ using UnityEngine;
 public class GoalManager : MonoBehaviour
 {
 
-    public static bool completed;
+    public bool completed;
+
+    public int levelNumber;
 
     public int undos;
 

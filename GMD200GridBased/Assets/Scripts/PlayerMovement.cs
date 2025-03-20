@@ -10,16 +10,12 @@ using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
-    /*public float transitionSpeed;*/
+
     public int undos;
 
     public Vector2Int gridPos;
 
     private Vector2Int nextPos;
-    /*static int MAX = 4;*/
-    /*public float coolTime;
-    private float[] downTime = new float[MAX];*/ // Old stuff that is no longer used
-    /*[SerializeField] private bool[] cooldown = new bool[MAX]; // bools for the 4 directions of movement*/
 
     [SerializeField] private GridManager gM;
     private GoalManager playerGoal;

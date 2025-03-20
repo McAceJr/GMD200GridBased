@@ -15,7 +15,10 @@ public class GridManager : MonoBehaviour
 {
 
     private int sceneIndex;
+    public int worldNumber = 1;
     private int levelNumber = 1;
+    private int levelGoalNumber = 1;
+    private int levelGoalAmount = 0;
     public string exitTo;
 
     public bool playerIsTweening;
@@ -43,6 +46,8 @@ public class GridManager : MonoBehaviour
     public List<GridTile> _tiles = new List<GridTile>();
     public List<BoxMovement> _boxes = new List<BoxMovement>();
     public List<GoalManager> _goals = new List<GoalManager>();
+
+    private static bool[] _completions = new bool[1000];
 
     private bool uiActive = false;
 
@@ -240,6 +245,12 @@ public class GridManager : MonoBehaviour
 
                     levelGoal.transform.position = tilePos;
 
+                    levelGoal.levelNumber = levelGoalNumber;
+
+                    levelGoalNumber++;
+
+                    levelGoalAmount++;
+
                     _goals.Capacity++;
 
                     _goals.Add(levelGoal);
@@ -254,12 +265,27 @@ public class GridManager : MonoBehaviour
 
                     level.levelPos = new Vector2Int(x, y);
 
+                    level.worldNumber = worldNumber;
+
                     level.levelNumber = levelNumber;
 
+                    GoalManager[] levelGoal = FindObjectsOfType<GoalManager>();
+
+                    for (int i = 0; i < levelGoalAmount; i++)
+                    {
+                        if (level.levelNumber == levelGoal[i].levelNumber)
+                        {
+
+                            level.levelGoal = levelGoal[i];
+
+                        }
+                    }
+
+                    level.completed = _completions[levelNumber - 1];
+
                     levelNumber++;
+
                 }
-
-
             }
         }
 
