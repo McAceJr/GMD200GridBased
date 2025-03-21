@@ -810,12 +810,14 @@ MonoBehaviour:
   worldNumber: 1
   exitTo: MainMenu
   playerIsTweening: 0
+  complete: 0
   gridLevel: 1
   numRows: 0
   numCols: 0
-  level: {fileID: 2800000, guid: 94bd3e782d7fa9d45a36463a8c73777d, type: 3}
+  level: {fileID: 2800000, guid: 5cb2b57075a2a2045964c9ac08162649, type: 3}
   holderPrefab: {fileID: 2660963504972313302, guid: 1b8ccc5cc2d482e4796ce8629143148e, type: 3}
   tilePrefab: {fileID: 6914377085120548445, guid: e3c7c0a7a02593749b3b18260e354eb3, type: 3}
+  shakeManagerPrefab: {fileID: 1061887240506719155, guid: 48b44093abc10db46839487c75430b02, type: 3}
   playerPrefab: {fileID: 4153539925602362836, guid: 2aacd56d34bd67842a5e0cf9a17357dd, type: 3}
   boxPrefab: {fileID: 5934407243324292432, guid: abff683f0c08cec4f941f6433cb53645, type: 3}
   boxGoalPrefab: {fileID: 5985539375251311401, guid: e0f287b856721754a947a03cdd489a6e, type: 3}
@@ -829,8 +831,7 @@ MonoBehaviour:
   _tiles: []
   _boxes: []
   _goals: []
-  ease: 26
-  scaleDuration: 0.1
+  _levelGoals: []
 --- !u!4 &1662928522
 Transform:
   m_ObjectHideFlags: 0

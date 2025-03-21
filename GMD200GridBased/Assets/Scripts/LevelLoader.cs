@@ -7,15 +7,11 @@ using TMPro;
 public class LevelLoader : MonoBehaviour
 {
 
-    public bool completed;
-
     public Vector2Int levelPos;
 
     public int worldNumber;
     public int levelNumber;
     private string levelName;
-
-    public GoalManager levelGoal;
 
     public PlayerMovement pM;
     public GridManager gM;
@@ -36,8 +32,6 @@ public class LevelLoader : MonoBehaviour
 
         lvlText.text = levelName;
 
-        levelGoal.completed = completed;
-
     }
 
 
@@ -46,7 +40,7 @@ public class LevelLoader : MonoBehaviour
      */
     private void Update()
     {
-        
+
         if (pM.gridPos == levelPos)
         {
             if (Input.GetKeyDown(KeyCode.Space))

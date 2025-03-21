@@ -810,10 +810,11 @@ MonoBehaviour:
   worldNumber: 1
   exitTo: MainMenu
   playerIsTweening: 0
+  complete: 0
   gridLevel: 1
   numRows: 0
   numCols: 0
-  level: {fileID: 2800000, guid: 7700603cde839904793e91617aa407bf, type: 3}
+  level: {fileID: 2800000, guid: f1ff2ce3a29506d4b997f1d64a04f90b, type: 3}
   holderPrefab: {fileID: 2660963504972313302, guid: 1b8ccc5cc2d482e4796ce8629143148e, type: 3}
   tilePrefab: {fileID: 6914377085120548445, guid: e3c7c0a7a02593749b3b18260e354eb3, type: 3}
   shakeManagerPrefab: {fileID: 1061887240506719155, guid: 48b44093abc10db46839487c75430b02, type: 3}

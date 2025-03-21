@@ -135,14 +135,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6b603958159ed4f9f150c3bc477dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  complete: 0
+  levelNumber: 0
   undos: 0
   gM: {fileID: 0}
   sR: {fileID: 3923257342894623515}
   tMPro: {fileID: 4075863518136733888}
-  on: {r: 1, g: 0, b: 0, a: 0}
-  off: {r: 1, g: 0, b: 1, a: 0}
+  on: {r: 1, g: 0, b: 1, a: 1}
+  off: {r: 1, g: 0, b: 0, a: 1}
+  ontxt: J
+  offtxt: L
   goalPos: {x: 0, y: 0}
-  Active: 0
+  active: 0
   _states: 
 --- !u!23 &6798314668513893241
 MeshRenderer:
@@ -164,7 +168,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -4591776558835964999, guid: 48570399606eb55448dc63e49ab7afe4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -209,7 +213,7 @@ MonoBehaviour:
   m_text: L
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 48570399606eb55448dc63e49ab7afe4, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -4591776558835964999, guid: 48570399606eb55448dc63e49ab7afe4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

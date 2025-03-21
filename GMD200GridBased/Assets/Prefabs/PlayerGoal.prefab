@@ -51,13 +51,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6b603958159ed4f9f150c3bc477dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  complete: 0
+  levelNumber: 0
+  undos: 0
   gM: {fileID: 0}
   sR: {fileID: 7790162690120734424}
   tMPro: {fileID: 4429920787758588415}
   on: {r: 0, g: 1, b: 1, a: 1}
   off: {r: 0, g: 1, b: 0, a: 1}
+  ontxt: P
+  offtxt: O
   goalPos: {x: 0, y: 0}
-  Active: 0
+  active: 0
+  _states: 
 --- !u!23 &346881912712335401
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -120,7 +126,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: P
+  m_text: O
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 48570399606eb55448dc63e49ab7afe4, type: 2}
   m_sharedMaterial: {fileID: -4591776558835964999, guid: 48570399606eb55448dc63e49ab7afe4, type: 2}

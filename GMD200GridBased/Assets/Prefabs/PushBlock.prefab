@@ -51,12 +51,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d27aecab682da24ab50e4c97a7a2c05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  undos: 0
   gM: {fileID: 0}
   gridPos: {x: 0, y: 0}
   sR: {fileID: 4027284583886284123}
   tMPro: {fileID: 2149416624600038986}
   ease: 13
-  moveDuration: 0.2
+  moveDurFast: 0.05
+  moveDurNorm: 0.2
+  _boxPositions: []
 --- !u!23 &3382159040901647842
 MeshRenderer:
   m_ObjectHideFlags: 0

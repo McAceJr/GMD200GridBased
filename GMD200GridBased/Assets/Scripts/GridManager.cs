@@ -13,15 +13,14 @@ using UnityEngine.UIElements;
 
 public class GridManager : MonoBehaviour
 {
-
-    private int sceneIndex;
     public int worldNumber = 1;
     private int levelNumber = 1;
     private int levelGoalNumber = 1;
-    private int levelGoalAmount = 0;
     public string exitTo;
 
     public bool playerIsTweening;
+    private bool uiActive = false;
+    public bool complete;
 
     public int gridLevel;
 
@@ -32,6 +31,7 @@ public class GridManager : MonoBehaviour
 
     public GameObject holderPrefab;
     [SerializeField] private GridTile tilePrefab;
+    public SHAKEMODE shakeManagerPrefab;
     public PlayerMovement playerPrefab;
     public BoxMovement boxPrefab;
     public GoalManager boxGoalPrefab;
@@ -46,14 +46,11 @@ public class GridManager : MonoBehaviour
     public List<GridTile> _tiles = new List<GridTile>();
     public List<BoxMovement> _boxes = new List<BoxMovement>();
     public List<GoalManager> _goals = new List<GoalManager>();
+    public List<GoalManager> _levelGoals = new List<GoalManager>();
 
-    private static bool[] _completions = new bool[1000];
+    private const int MAX = 12;
+    private static bool[] _completions = new bool[MAX]; // 12 is the max amount of levels
 
-    private bool uiActive = false;
-
-    public Ease ease;
-    public float scaleDuration;
-    private Tween scaleTween;
 
     private void Awake() // double checks that the winui is off and sets capacities for the goals and boxes to 0 to be updated in the initialization
     {
@@ -63,6 +60,8 @@ public class GridManager : MonoBehaviour
         _goals.Capacity = 0;
 
         _boxes.Capacity = 0;
+
+        _levelGoals.Capacity = 0;
 
     }
 
@@ -78,14 +77,24 @@ public class GridManager : MonoBehaviour
     private void Update() // in update I check for if all the goals have been completed, and I check if the player wants to press R to restart or Z to Undo
     {
 
-        bool complete = true;
+        if (_levelGoals.Capacity > 0)
+        {
+            for (int i = 0; i < _levelGoals.Capacity; i++)
+            {
+
+                _levelGoals[i].complete = _completions[i];
+
+            }
+        }
+
+        complete = true;
 
         if (!uiActive) // checks if the ui is already activated meaning its been completed
         {
             for (int i = 0; i < _goals.Capacity; i++) // checks all goals and if a single goal isnt active than complete becomes false
             {
 
-                if (!_goals[i].Active)
+                if (!_goals[i].active)
                 {
                     complete = false;
                 }
@@ -110,6 +119,18 @@ public class GridManager : MonoBehaviour
 
                 }
 
+                Scene current = SceneManager.GetActiveScene();
+
+                for (int i = 0; i < MAX; i++)
+                {
+                    if (current.name == worldNumber + "-" + (i + 1))
+                    {
+
+                        _completions[i] = true;
+
+                    }
+                }
+
                 StartCoroutine(InputToLeave());
 
             }
@@ -117,6 +138,13 @@ public class GridManager : MonoBehaviour
             winUI.SetActive(true);
 
             uiActive = true;
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape) && !complete)
+        {
+
+            SceneManager.LoadScene("MainMenu");
 
         }
 
@@ -129,6 +157,8 @@ public class GridManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z) && !complete) // everytime the player moves it records everything's position / states and then pressing Z goes backwards 1 in the list removing the positions/states they used to be at
         {
+
+            player.moveTween.Kill();
 
             if (player._playerPositions.Capacity <= 1) // checks for the only player as long as there is more than 1 state in there meaning you aren't at the start
             {
@@ -157,7 +187,7 @@ public class GridManager : MonoBehaviour
             for (int i = 0; i < _goals.Capacity; i++) // checks for multiple goals 
             {
 
-                _goals[i].Active = _goals[i]._states[_goals[i].undos - 2];
+                _goals[i].active = _goals[i]._states[_goals[i].undos - 2];
 
                 _goals[i]._states.RemoveAt(_goals[i].undos - 1);
 
@@ -247,13 +277,17 @@ public class GridManager : MonoBehaviour
 
                     levelGoal.levelNumber = levelGoalNumber;
 
-                    levelGoalNumber++;
+                    levelGoal.complete = _completions[levelGoalNumber - 1];
 
-                    levelGoalAmount++;
+                    levelGoalNumber++;
 
                     _goals.Capacity++;
 
                     _goals.Add(levelGoal);
+
+                    _levelGoals.Capacity++;
+
+                    _levelGoals.Add(levelGoal);
 
                 }
                 else if (tile.data[7].isType)
@@ -269,20 +303,6 @@ public class GridManager : MonoBehaviour
 
                     level.levelNumber = levelNumber;
 
-                    GoalManager[] levelGoal = FindObjectsOfType<GoalManager>();
-
-                    for (int i = 0; i < levelGoalAmount; i++)
-                    {
-                        if (level.levelNumber == levelGoal[i].levelNumber)
-                        {
-
-                            level.levelGoal = levelGoal[i];
-
-                        }
-                    }
-
-                    level.completed = _completions[levelNumber - 1];
-
                     levelNumber++;
 
                 }
@@ -292,6 +312,8 @@ public class GridManager : MonoBehaviour
         lowbound.transform.position = _tiles[0].transform.position;
 
         highbound.transform.position = _tiles[_tiles.Capacity -1].transform.position;
+
+        Instantiate(shakeManagerPrefab, transform.position, transform.rotation);
 
     }
 

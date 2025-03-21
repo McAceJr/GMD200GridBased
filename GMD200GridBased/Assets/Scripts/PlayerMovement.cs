@@ -24,7 +24,8 @@ public class PlayerMovement : MonoBehaviour
     public TextMeshPro tMPro;
 
     public Ease ease;
-    public float moveDuration;
+    public float moveDurFast, moveDurNorm;
+    private float moveDuration;
     public Tween moveTween;
 
     public List<Vector2Int> _playerPositions = new List<Vector2Int>();
@@ -39,6 +40,11 @@ public class PlayerMovement : MonoBehaviour
 
         for (int i = 0; i < MAX; i++)
             downTime[i] = 0;*/
+
+    }
+
+    private void Start()
+    {
 
         _playerPositions.Capacity = 1;
 
@@ -155,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 gM._goals[i]._states.Capacity++;
 
-                gM._goals[i]._states.Add(gM._goals[i].Active);
+                gM._goals[i]._states.Add(gM._goals[i].active);
             }
         }
     }
@@ -182,6 +188,19 @@ public class PlayerMovement : MonoBehaviour
                 cooldown[i] = true;
             }
         }*/
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+
+            moveDuration = moveDurFast;
+
+        }
+        else
+        {
+
+            moveDuration = moveDurNorm;
+
+        }
 
         nextPos = new Vector2Int(0,0);
 

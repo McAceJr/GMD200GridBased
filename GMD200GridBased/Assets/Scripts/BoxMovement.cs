@@ -24,7 +24,8 @@ public class BoxMovement : MonoBehaviour
     public TextMeshPro tMPro;
 
     public Ease ease;
-    public float moveDuration;
+    public float moveDurFast, moveDurNorm;
+    private float moveDuration;
     private Tween moveTween;
 
     public List<Vector2Int> _boxPositions = new List<Vector2Int>();
@@ -49,6 +50,19 @@ public class BoxMovement : MonoBehaviour
         {
 
             gM.GetTile(gridPos.x, gridPos.y).data[3].isType = true;
+
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+
+            moveDuration = moveDurFast;
+
+        }
+        else
+        {
+
+            moveDuration = moveDurNorm;
 
         }
 

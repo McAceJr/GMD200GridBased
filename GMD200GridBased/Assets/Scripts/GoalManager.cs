@@ -6,7 +6,8 @@ using UnityEngine;
 public class GoalManager : MonoBehaviour
 {
 
-    public bool completed;
+    public bool complete;
+    private static bool completed;
 
     public int levelNumber;
 
@@ -18,18 +19,27 @@ public class GoalManager : MonoBehaviour
 
     public Color on, off;
 
+    public string ontxt, offtxt;
+
     public Vector2Int goalPos;
 
-    public bool Active;
+    public bool active;
 
     public List<bool> _states = new List<bool>();
 
     private void Awake() // resets the states to 1 and adds a false state signaling the starting state
     {
-        
+
         _states.Capacity = 1;
 
         _states.Add(false);
+
+    }
+
+    private void Update() // checks if the bool has been triggered and if it has thenn it should be on otherwise off
+    {
+
+        completed = complete;
 
         if (completed)
         {
@@ -38,23 +48,22 @@ public class GoalManager : MonoBehaviour
 
         }
 
-    }
-
-    private void Update() // checks if the bool has been triggered and if it has thenn it should be on otherwise off
-    {
-        
         undos = _states.Capacity;
 
-        if (Active)
+        if (active)
         {
 
             sR.color = on;
 
+            tMPro.text = ontxt;
+
             tMPro.color = Color.white;
 
         }
-        else if (!Active)
+        else if (!active)
         {
+
+            tMPro.text = offtxt;
 
             sR.color = off;
 
@@ -62,20 +71,19 @@ public class GoalManager : MonoBehaviour
 
         }
 
-
     }
 
     public void Activate() //called by other functions to active goal
     {
 
-        Active = true;
+        active = true;
 
     }
 
     public void Deactivate() //called by other functions to deactivate goal
     {
 
-        Active = false;
+        active = false;
 
     }
 }
