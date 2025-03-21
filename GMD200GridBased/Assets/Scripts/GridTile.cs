@@ -48,11 +48,11 @@ public class GridTile : MonoBehaviour
 
                 found = true;
 
-                if (data[i].typeColor == data[2].typeColor)
+                if (data[i].typeColor == data[(int)TileType.Player].typeColor)
                     spr.color = Color.white;
-                else if (data[i].typeColor == data[3].typeColor)
+                else if (data[i].typeColor == data[(int)TileType.Box].typeColor)
                     spr.color = Color.white;
-                else if (data[i].typeColor == data[6].typeColor)
+                else if (data[i].typeColor == data[(int)TileType.LevelGoal].typeColor)
                     data[1].isType = true;
                 
 
@@ -68,7 +68,7 @@ public class GridTile : MonoBehaviour
              if its not found it will also make the tile black to make invisible paths
              */
 
-            data[0].isType = true;
+            data[(int)TileType.Empty].isType = true;
 
             spr.color = Color.black;
 

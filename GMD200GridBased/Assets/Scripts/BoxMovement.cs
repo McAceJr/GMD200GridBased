@@ -73,9 +73,9 @@ public class BoxMovement : MonoBehaviour
 
         Vector2Int nextpos = gridPos + dir;
 
-        if (gM.GetTile(nextpos.x, nextpos.y).data[1].isType)
+        if (gM.GetTile(nextpos.x, nextpos.y).data[(int)TileType.Wall].isType)
             return false;
-        else if (gM.GetTile(nextpos.x, nextpos.y).data[3].isType)
+        else if (gM.GetTile(nextpos.x, nextpos.y).data[(int)TileType.Box].isType)
         {
             bool nextBoxCheck;
 
@@ -86,7 +86,7 @@ public class BoxMovement : MonoBehaviour
             if (nextBoxCheck)
             {
 
-                if (gM.GetTile(nextpos.x, nextpos.y).data[4].isType)
+                if (gM.GetTile(nextpos.x, nextpos.y).data[(int)TileType.BoxGoal].isType)
                 {
 
                     boxGoal = gM.GetTile(nextpos.x, nextpos.y).GetComponentInChildren<GoalManager>();
@@ -107,7 +107,7 @@ public class BoxMovement : MonoBehaviour
         }
         else
         {
-            if (gM.GetTile(nextpos.x, nextpos.y).data[4].isType)
+            if (gM.GetTile(nextpos.x, nextpos.y).data[(int)TileType.BoxGoal].isType)
             {
 
                 boxGoal = gM.GetTile(nextpos.x, nextpos.y).GetComponentInChildren<GoalManager>();
@@ -131,7 +131,7 @@ public class BoxMovement : MonoBehaviour
 
         gM.GetTile(gridPos.x, gridPos.y).data[BoxData].isType = false;
 
-        if (gM.GetTile(gridPos.x, gridPos.y).data[4].isType)
+        if (gM.GetTile(gridPos.x, gridPos.y).data[(int)TileType.BoxGoal].isType)
         {
 
             boxGoal = gM.GetTile(gridPos.x, gridPos.y).GetComponentInChildren<GoalManager>();

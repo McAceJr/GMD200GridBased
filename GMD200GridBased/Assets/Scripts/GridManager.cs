@@ -11,6 +11,27 @@ using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
+/*
+0 Empty Tile
+1 Wall Tile
+2 Player Tile
+3 Box Tile
+4 Box Goal Tile
+5 Player Goal Tile
+6 Level Goal Tile
+7 Level Button Tile
+*/
+public enum TileType
+{
+    Empty,
+    Wall,
+    Player,
+    Box,
+    BoxGoal,
+    PlayerGoal,
+    LevelGoal,
+    Level
+}
 public class GridManager : MonoBehaviour
 {
     public int worldNumber = 1;
@@ -221,14 +242,14 @@ public class GridManager : MonoBehaviour
                 int index = y * numCols + x;
                 tile.spr.color = colorData[index];
                 tile.AssignType();
-                if (tile.data[2].isType)
+                if (tile.data[(int)TileType.Player].isType)
                 {
 
                     player = Instantiate(playerPrefab, tile.transform);
 
                     player.gridPos = new Vector2Int(x, y);
                 }
-                else if (tile.data[3].isType)
+                else if (tile.data[(int)TileType.Box].isType)
                 {
 
                     BoxMovement box = Instantiate(boxPrefab, tile.transform);
@@ -244,7 +265,7 @@ public class GridManager : MonoBehaviour
                     _boxes.Add(box);
 
                 }
-                else if (tile.data[4].isType)
+                else if (tile.data[(int)TileType.BoxGoal].isType)
                 {
 
                     GoalManager boxGoal = Instantiate(boxGoalPrefab, tile.transform);
@@ -256,7 +277,7 @@ public class GridManager : MonoBehaviour
                     _goals.Add(boxGoal);
 
                 }
-                else if (tile.data[5].isType)
+                else if (tile.data[(int)TileType.PlayerGoal].isType)
                 {
 
                     GoalManager playerGoal = Instantiate(playerGoalPrefab, tile.transform);
@@ -268,7 +289,7 @@ public class GridManager : MonoBehaviour
                     _goals.Add(playerGoal);
 
                 }
-                else if (tile.data[6].isType)
+                else if (tile.data[(int)TileType.LevelGoal].isType)
                 {
 
                     GoalManager levelGoal = Instantiate(levelGoalPrefab, tile.transform);
@@ -290,7 +311,7 @@ public class GridManager : MonoBehaviour
                     _levelGoals.Add(levelGoal);
 
                 }
-                else if (tile.data[7].isType)
+                else if (tile.data[(int)TileType.Level].isType)
                 {
                     
                     LevelLoader level = Instantiate(levelLoaderPrefab, tile.transform);
@@ -313,7 +334,7 @@ public class GridManager : MonoBehaviour
 
         highbound.transform.position = _tiles[_tiles.Capacity -1].transform.position;
 
-        Instantiate(shakeManagerPrefab, transform.position, transform.rotation);
+        //Instantiate(shakeManagerPrefab, transform.position, transform.rotation);
 
     }
 

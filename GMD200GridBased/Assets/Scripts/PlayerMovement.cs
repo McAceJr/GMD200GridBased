@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 stillpos = gM.GetTile(oldpos.x, oldpos.y).transform.position;
 
-        if (gM.GetTile(newpos.x, newpos.y).data[1].isType != true && gM.GetTile(newpos.x, newpos.y).data[3].isType != true)
+        if (gM.GetTile(newpos.x, newpos.y).data[(int)TileType.Wall].isType != true && gM.GetTile(newpos.x, newpos.y).data[(int)TileType.Box].isType != true)
         {
 
             //gM.GetTile(oldpos.x, oldpos.y).data[0].isType = false;
@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
             moved = true;
 
         }
-        else if (gM.GetTile(newpos.x, newpos.y).data[3].isType)
+        else if (gM.GetTile(newpos.x, newpos.y).data[(int)TileType.Box].isType)
         {
 
             bool canMove = gM.GetBox(newpos.x, newpos.y).PushCheck(dir);
@@ -101,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
                 
 
         }
-        else if (gM.GetTile(newpos.x, newpos.y).data[1].isType)
+        else if (gM.GetTile(newpos.x, newpos.y).data[(int)TileType.Wall].isType)
         {
 
             moveTween = transform.DOMove(stillpos, moveDuration * movemult).SetEase(ease);
@@ -115,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
 
             gridPos = newpos;
 
-            if (gM.GetTile(newpos.x, newpos.y).data[5].isType)
+            if (gM.GetTile(newpos.x, newpos.y).data[(int)TileType.PlayerGoal].isType)
             {
 
                 playerGoal = gM.GetTile(newpos.x, newpos.y).GetComponentInChildren<GoalManager>();
@@ -126,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
 
             }
 
-            if (gM.GetTile(oldpos.x, oldpos.y).data[5].isType)
+            if (gM.GetTile(oldpos.x, oldpos.y).data[(int)TileType.PlayerGoal].isType)
             {
 
                 playerGoal = gM.GetTile(oldpos.x, oldpos.y).GetComponentInChildren<GoalManager>();
@@ -137,8 +137,8 @@ public class PlayerMovement : MonoBehaviour
 
             }
 
-            gM.GetTile(oldpos.x, oldpos.y).data[2].isType = false;
-            gM.GetTile(newpos.x, newpos.y).data[2].isType = true;
+            gM.GetTile(oldpos.x, oldpos.y).data[(int)TileType.Player].isType = false;
+            gM.GetTile(newpos.x, newpos.y).data[(int)TileType.Player].isType = true;
 
         }
 

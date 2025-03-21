@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class SHAKEMODE : MonoBehaviour
 {
 
-    public float minMax;
+    public bool stayactive;
 
-    private static bool stayactive;
+    public float minMax;
 
     private Vector3 positionShake;
 
@@ -16,6 +18,13 @@ public class SHAKEMODE : MonoBehaviour
 
     private void Start()
     {
+
+        if (stayactive)
+        {
+
+            ToggleShakeMode(stayactive);
+
+        }
 
         gM = FindObjectOfType<GridManager>();
 
@@ -44,6 +53,8 @@ public class SHAKEMODE : MonoBehaviour
     {
 
         stayactive = ison;
+
+
 
     }
 
